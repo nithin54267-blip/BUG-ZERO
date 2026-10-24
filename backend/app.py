@@ -6,7 +6,8 @@ from models.db import init_db
 from routes.analyze_routes import analyze_bp
 from routes.auth_routes import auth_bp
 from routes.history_routes import history_bp
-
+import os
+API_KEY = os.environ.get("API_KEY")
 
 def create_app():
     app = Flask(__name__, static_folder=None)
@@ -36,3 +37,9 @@ def create_app():
 
 if __name__ == "__main__":
     create_app().run(debug=True, port=5000)
+from flask import Flask, send_from_directory
+app = Flask(__name__, static_folder="../frontend", static_url_path="")
+
+@app.route("/")
+def home():
+    return send_from_directory(app.static_folder, "index.html")
